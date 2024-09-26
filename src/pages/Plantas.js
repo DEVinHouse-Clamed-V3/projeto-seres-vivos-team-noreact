@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, Animated, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { LinearGradient } from 'expo-linear-gradient'; // Se estiver usando expo
+import { LinearGradient } from 'expo-linear-gradient'; 
 
 const PlantasScreen = () => {
   const [plantas, setPlantas] = useState([]);
@@ -26,7 +26,7 @@ const PlantasScreen = () => {
   }, []);
 
   const renderItem = ({ item }) => {
-    // Animação para o efeito de toque no card
+    
     const animatedScale = new Animated.Value(1);
 
     const handlePressIn = () => {
@@ -54,7 +54,7 @@ const PlantasScreen = () => {
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.description}>{item.description}</Text>
 
-          {/* Caixa de descrição com tags coloridas */}
+          
           <View style={styles.tagsContainer}>
             <LinearGradient
               colors={['#D5E8D4', '#b3d7bb']}
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   tagsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Permite quebrar as tags em linhas novas se não houver espaço suficiente
+    flexWrap: 'wrap', 
     marginTop: 10,
   },
   tag: {
