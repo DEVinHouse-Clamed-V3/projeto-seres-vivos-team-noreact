@@ -1,104 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 
-
 const PlantasScreen = () => {
   const [plantas, setPlantas] = useState([]);
 
-  
   useEffect(() => {
     const fetchData = async () => {
-     
-      const data = {
-        plantas: [
-          {
-            id: '1',
-            name: 'Cacto',
-            description: 'Planta adaptada a ambientes áridos.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '2',
-            name: 'Rosa',
-            description: 'A rosa é uma planta ornamental popular.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '3',
-            name: 'Eucalipto',
-            description: 'Árvore de rápido crescimento, nativa da Austrália.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '4',
-            name: 'Orquídea',
-            description: 'Planta conhecida por suas flores exóticas.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '5',
-            name: 'Grama',
-            description: 'Planta herbácea comum em campos.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '6',
-            name: 'Hibisco',
-            description: 'Planta com flores grandes e coloridas.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-          {
-            id: '7',
-            name: 'Pinheiro',
-            description: 'Árvore conífera, comum em regiões frias.',
-            nutrition: 'Autótrofo',
-            cellType: 'Eucariontes',
-            cellOrganization: 'Multicelulares',
-            reproduction: 'Sexuada',
-            respiration: 'Aeróbia',
-            image: 'https://via.placeholder.com/150',
-          },
-        ],
-      };
+      try {
+        
+        const response = require('../../database.json');
 
       
-      setPlantas(data.plantas);
+        const data = JSON.parse(JSON.stringify(response));
+
+        
+        if (data.plantas) {
+          setPlantas(data.plantas);
+        } else {
+          console.error("A propriedade 'plantas' não foi encontrada no JSON.");
+        }
+      } catch (error) {
+        console.error('Erro ao carregar ou analisar o arquivo JSON:', error);
+      }
     };
 
     fetchData();
   }, []);
 
-  
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
@@ -112,7 +40,6 @@ const PlantasScreen = () => {
     </View>
   );
 
-  
   return (
     <View style={styles.container}>
       <FlatList
