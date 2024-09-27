@@ -23,7 +23,11 @@ export default function App() {
         <Stack.Screen name="Plantae" component={Plantas} />
         <Stack.Screen name="Fungi" component={Fungos} />
         <Stack.Screen name="Protista" component={Protista} />
-        <Stack.Screen name="Monera" component={Monera} />
+        <Stack.Screen
+          name="Monera"
+          component={Monera}
+          options={{ headerTitle: "" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

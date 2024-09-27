@@ -7,6 +7,12 @@ export default StyleSheet.create({
     paddingVertical: 20,
     backgroundColor: "#EFEFEF",
   },
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+  },
   contentImage: {
     width: 100,
     height: 100,
@@ -39,5 +45,15 @@ export default StyleSheet.create({
   },
   contentText: {
     fontSize: 16,
+  },
+  searchInput: {
+    backgroundColor: "#E2EBFA",
+    borderRadius: 10,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 20,
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingLeft: 10,
   },
 });
