@@ -5,5 +5,9 @@ export const globalStyles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#f0f0f0',
       paddingVertical: 20,
+    },
+    funghiList: {
+      backgroundColor: '#8d8177',
+      paddingHorizontal: 15
     }
   });
