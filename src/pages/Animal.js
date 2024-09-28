@@ -13,15 +13,15 @@ const Animal  = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://10.0.0.113:3000/animais');
-        if (response.data){
+        if (Array.isArray(response.data) && response.data.length > 0 ){
           setAnimalia(response.data);
         } else {
           Alert.alert("Os dados referentes aos animais não foram encontrados na base de dados");
-          console.log(response.data)
+          console.log("Response data", response.data)
         }
       } catch (e) {
         Alert.alert("Erro ao carregar a base de dados")
-        console.log(response.data)
+        console.log(e)
       }
     }
     fetchData();
@@ -113,7 +113,7 @@ const Animal  = () => {
       <FlatList
       data={animalia}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       />
     </View>
     </SafeAreaView>
