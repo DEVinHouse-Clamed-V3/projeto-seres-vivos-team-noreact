@@ -1,35 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Animated, TouchableWithoutFeedback, Alert ,SafeAreaView } from 'react-native';
+import { View, Text, Image, FlatList, TextInput, Animated, TouchableWithoutFeedback, Alert ,SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { styles } from '../styles/animalia'
 import axios from 'axios';
 
 
 const Animal  = () => {
 
-  const [ animalia, setAnimalia ] = useState([])
+  const [ animalia, setAnimalia ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ filteredAnimalia, setFilteredAnimalia] = useState([]);
+  const [ filterText, setFilterText ] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://10.0.0.113:3000/animais');
-        if (Array.isArray(response.data) && response.data.length > 0 ){
+        const response = await axios.get(`http://10.0.0.113:3000/animais?timestamp=${new Date().getTime()}`);
+        if (Array.isArray(response.data) && response.data.length > 0) {
           setAnimalia(response.data);
+          setFilteredAnimalia(response.data);
+          console.log('Data fetched successfully');
         } else {
           Alert.alert("Os dados referentes aos animais não foram encontrados na base de dados");
-          console.log("Response data", response.data)
         }
-      } catch (e) {
+      } catch (error) {
         Alert.alert("Erro ao carregar a base de dados")
-        console.log(e)
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
+
+  const filterAnimalia = (text) => {
+    setFilterText(text);
+    if (text) {
+      const filtered = animalia.filter(item =>
+        item.name.toLowerCase().includes(text.toLowerCase()) ||
+        item.nutrition.toLowerCase().includes(text.toLowerCase()) ||
+        item.cellType.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredAnimalia(filtered);
+    } else {
+      setFilteredAnimalia(animalia);
+    }
+  };
+
 
   const renderItem = ({ item }) => {
-
     const animatedScale = new Animated.Value(1);
+
 
     const handlePressIn = () => {
       Animated.spring(animatedScale,{
@@ -107,72 +129,25 @@ const Animal  = () => {
   );
 };
 
+if (loading) {
+  return <Text>Loading...</Text>
+}
+
   return(
-    <SafeAreaView>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Pesquise por nome, nutrição, ou tipo celular"
+        value={filterText}
+        onChangeText={filterAnimalia}
+      />
       <FlatList
-      data={animalia}
+      data={filteredAnimalia}
       renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
       />
-    </View>
     </SafeAreaView>
   )
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-    padding: 10,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    padding: 20,
-    marginVertical: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#333',
-  },
-  description: {
-    fontSize: 16,
-    color: '#777',
-    marginBottom: 15,
-  },
-  tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
-  },
-  tag: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginRight: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    backgroundColor: '#f0f0f0',
-  },
-  tagText: {
-    fontSize: 14,
-    color: '#555',
-    marginLeft: 5,
-  },
-});
 export default Animal;
