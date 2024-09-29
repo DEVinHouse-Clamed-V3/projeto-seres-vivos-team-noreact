@@ -19,7 +19,7 @@ const Fungos = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.15.57:3000/fungos')
+      .get('http://192.168.15.65:3000/fungos')
       .then((response) => {
         setFungiList(response.data);
       })
@@ -31,86 +31,61 @@ const Fungos = () => {
 
 
   const renderItem = ({ item }) => (
-    <View>
-      {Object.entries(item).map(([key, value]) => {
-        if (key === 'image') {
-          return (
-            <Image
-              key={key}
-              source={{ uri: value }} // Usando a URL do valor
-              style={{ width: 150, height: 150 }}
-              resizeMode="contain" // Ajusta a imagem para caber no espaço
-            />
-          )
-        }
+    <View style={globalStyles.card}>
+      {/* Exibindo a imagem */}
+      <Image
+        source= {{ uri: item.image }}
+        style={globalStyles.image}
+        resizeMode="contain"
+      />
+      
+      
 
-        if (key !== 'id') {
-          return (
-            <Text key={key}>
-              {displayNames[key]}: {value}
-            </Text>
-          );
-        }
-        <Text key={key}>
-          {key}: {value}
+      <View style={globalStyles.textLeft}>
+        <Text style={[globalStyles.textBold, , globalStyles.textH1]}>
+          {item.name}
         </Text>
-      })}
+        <Text style={globalStyles.text}>
+          {item.description}
+        </Text>
+
+        <View>
+          <Text style={globalStyles.textBold}>{displayNames.nutrition}: {item.nutrition}</Text>
+        </View>
+
+        <View>
+          <Text style={globalStyles.textBold}>{displayNames.cellType}: {item.cellType}</Text>
+        </View>
+
+        <View>
+          <Text style={globalStyles.textBold}>{displayNames.cellOrganization}: {item.cellOrganization}</Text>
+        </View>
+
+        <View>
+          <Text style={globalStyles.textBold}>{displayNames.reproduction}: {item.reproduction}</Text>
+        </View>
+
+        <View>
+          <Text style={globalStyles.textBold}>{displayNames.respiration}: {item.respiration}</Text> 
+        </View>
+      </View>
+
+
     </View>
+    
   );
 
   return (
     <SafeAreaView style={globalStyles.container}>
       <FlatList
-        style={globalStyles.funghiList}
-        data={fungiList}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
+        data={fungiList} // Sua lista de dados
+        keyExtractor={item => item.id.toString()} // Convertendo id para string
+        renderItem={renderItem} // Chamando a função para renderizar cada item
       />
     </SafeAreaView>
   );
-}
-
-  // COM SCROLL VIEW
-  // return (
-  //   <SafeAreaView style={globalStyles.container}>
-  //     <ScrollView>
-  //       {fungiList.map((fungi) => {
-  //         return (
-  //           <View style={styles.fungiStyle} key={fungi.id}>
-  //             {Object.entries(fungi).map(([key, value]) => {
-
-  //               if (key === 'image') {
-  //                 return (
-  //                   <Image
-  //                     key={key}
-  //                     source={{ uri: value }} // Usando a URL do valor
-  //                     style={{ width: 150, height: 150 }}
-  //                     resizeMode="contain" // Ajusta a imagem para caber no espaço
-  //                   />
-  //                 )
-  //               }
-
-  //               if (key !== 'id') {
-  //                 return (
-  //                   <Text key={key}>
-  //                     {displayNames[key]}: {value}
-  //                   </Text>
-  //                 );
-  //               }
-
-
-  //             })}
-  //           </View>
-  //         )
-
-  //       })}
-  //     </ScrollView>
-  //   </SafeAreaView>
-  // );
-// };
-
-
-
+};
+ 
 
 
 export default Fungos;
