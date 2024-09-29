@@ -1,16 +1,15 @@
-import React from "react";
 import {
   Text,
   SafeAreaView,
   View,
   ScrollView,
+  FlatList,
   Image,
   TextInput,
 } from "react-native";
 import styles from "../styles/global";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Monera = () => {
   // get -> lista info
@@ -73,14 +72,57 @@ const Monera = () => {
     if (filterName === "") {
       setMoneras(originalMonera); //volta ao array original
     } else {
-      const filterMonera = originalMonera.filter((monera) =>
+      const filterMonera = moneras.filter((monera) =>
         monera.name
           .toLocaleLowerCase()
           .startsWith(filterName.toLocaleLowerCase())
       );
+
       setMoneras(filterMonera);
     }
   }, [filterName]);
+
+  const renderMonera = ({ item: monera }) => {
+    return (
+      <View style={styles.contentContainer}>
+        <Image
+          source={{ uri: monera.image }}
+          style={styles.contentImage}
+        ></Image>
+
+        <View>
+          <Text style={styles.contentName}>{monera.name}</Text>
+          <Text style={styles.contentText}>{monera.description}</Text>
+          <Text style={styles.contentText}>{monera.nutrition}</Text>
+          <Text style={styles.contentText}>{monera.cellType}</Text>
+          <Text style={styles.contentText}>{monera.cellOrganization}</Text>
+          <Text style={styles.contentText}>{monera.reproduction}</Text>
+          <Text style={styles.contentText}>{monera.respiration}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  // function renderMonera({ item: monera }) {
+  //   return (
+  //     <View style={styles.contentContainer}>
+  //       <Image
+  //         source={{ uri: monera.image }}
+  //         style={styles.contentImage}
+  //       ></Image>
+
+  //       <View>
+  //         <Text style={styles.contentName}>{monera.name}</Text>
+  //         <Text style={styles.contentText}>{monera.description}</Text>
+  //         <Text style={styles.contentText}>{monera.nutrition}</Text>
+  //         <Text style={styles.contentText}>{monera.cellTyoe}</Text>
+  //         <Text style={styles.contentText}>{monera.cellOrganization}</Text>
+  //         <Text style={styles.contentText}>{monera.reproduction}</Text>
+  //         <Text style={styles.contentText}>{monera.respiration}</Text>
+  //       </View>
+  //     </View>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,25 +135,42 @@ const Monera = () => {
         placeholder="Procure o nome:"
       ></TextInput>
 
-      <ScrollView>
-        {moneras.map((monera) => (
-          <View style={styles.contentContainer} key={monera.id}>
-            <Image
-              source={{ uri: monera.image }}
-              style={styles.contentImage}
-            ></Image>
-            <View style={styles.containerText}>
-              <Text style={styles.contentName}>{monera.name}</Text>
-              <Text style={styles.contentText}> {monera.description} </Text>
-              <Text style={styles.contentText}> {monera.nutrition} </Text>
-              <Text style={styles.contentText}> {monera.cellType} </Text>
-              <Text style={styles.contentText}>{monera.cellOrganization}</Text>
-              <Text style={styles.contentText}> {monera.reproduction} </Text>
-              <Text style={styles.contentText}> {monera.respiration} </Text>
+      <FlatList
+        data={moneras}
+        keyExtractor={(monera) => monera.id.toString()}
+        renderItem={renderMonera}
+      ></FlatList>
+
+      {/* <ScrollView>
+        {moneras.map((monera) => {
+          return (
+            <View style={styles.contentContainer} key={monera.id}>
+              <Image
+                source={{ uri: monera.image }}
+                style={styles.contentImage}
+              ></Image>
+
+              <View style={styles.containerText}>
+                <Text style={styles.contentName}>{monera.name}</Text>
+
+                <Text style={styles.contentText}> {monera.description} </Text>
+
+                <Text style={styles.contentText}> {monera.nutrition} </Text>
+
+                <Text style={styles.contentText}> {monera.cellType} </Text>
+
+                <Text style={styles.contentText}>
+                  {monera.cellOrganization}
+                </Text>
+
+                <Text style={styles.contentText}> {monera.reproduction} </Text>
+
+                <Text style={styles.contentText}> {monera.respiration} </Text>
+              </View>
             </View>
-          </View>
-        ))}
-      </ScrollView>
+          );
+        })}
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
