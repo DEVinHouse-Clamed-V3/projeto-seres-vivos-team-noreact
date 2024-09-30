@@ -12,19 +12,20 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: "Reino Animal" }}
-        />
-        <Stack.Screen name="Animal" component={Animal} />
-        <Stack.Screen name="Plantae" component={Plantas} />
-        <Stack.Screen name="Fungi" component={Fungos} />
-        <Stack.Screen name="Protista" component={Protista} />
-        <Stack.Screen name="Monera" component={Monera} />
-      </Stack.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: "Reino Animal"}}
+          />
+          <Stack.Screen name="Animal" component={Animal} options={{headerShown: false}}/>
+          <Stack.Screen name="Plantae" component={Plantas} options={{headerShown: false}} />
+          <Stack.Screen name="Fungi" component={Fungos} options={{headerShown: false}} />
+          <Stack.Screen name="Protista" component={Protista} options={{headerShown: false}} />
+          <Stack.Screen name="Monera" component={Monera} options={{headerShown: false}} />
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }
