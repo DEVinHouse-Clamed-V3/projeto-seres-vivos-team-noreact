@@ -6,8 +6,10 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     paddingVertical: 20,
   },
-  card: {
+  cardFunghi: {
     backgroundColor: '#fff',
+    width: '90%',
+    alignSelf: 'center',
     borderRadius: 10,
     padding: 20,
     textAlign: "left",
@@ -21,16 +23,28 @@ export const globalStyles = StyleSheet.create({
   image: {
     width: 300,
     height: 250,
-
+    borderRadius: 15,
+    marginBottom: 15
   },
   textBold: {
     fontWeight: 'bold',
   },
-  textH1:{
-    fontSize: 20
+  title:{
+    fontSize: 22,
+    paddingBottom: 10
   },
-  textLeft: {
-    textAlign: "left"
+  descriptionContainer: {
+    textAlign: "left",
+    width: 350,
+  },
+  displayRow: {
+    flexDirection: 'row',
+    paddingBottom: 1
+  },
+  subtitle: {
+    paddingBottom: 6,
+    fontSize: 16
   }
+
 
 });

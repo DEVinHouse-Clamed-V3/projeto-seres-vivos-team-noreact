@@ -19,7 +19,7 @@ const Fungos = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.15.65:3000/fungos')
+      .get('http://192.168.0.156:3000/fungos')
       .then((response) => {
         setFungiList(response.data);
       })
@@ -31,42 +31,42 @@ const Fungos = () => {
 
 
   const renderItem = ({ item }) => (
-    <View style={globalStyles.card}>
+    <View style={globalStyles.cardFunghi}>
       {/* Exibindo a imagem */}
       <Image
         source= {{ uri: item.image }}
         style={globalStyles.image}
-        resizeMode="contain"
+        // resizeMode="contain"
       />
       
       
 
-      <View style={globalStyles.textLeft}>
-        <Text style={[globalStyles.textBold, , globalStyles.textH1]}>
+      <View style={globalStyles.descriptionContainer}>
+        <Text style={[globalStyles.textBold, , globalStyles.title]}>
           {item.name}
         </Text>
-        <Text style={globalStyles.text}>
+        <Text style={globalStyles.subtitle}>
           {item.description}
         </Text>
 
-        <View>
-          <Text style={globalStyles.textBold}>{displayNames.nutrition}: {item.nutrition}</Text>
+        <View style={globalStyles.displayRow}>
+          <Text style={globalStyles.textBold}>{displayNames.nutrition}: </Text><Text>{item.nutrition}</Text> 
         </View>
 
-        <View>
-          <Text style={globalStyles.textBold}>{displayNames.cellType}: {item.cellType}</Text>
+        <View style={globalStyles.displayRow}>
+          <Text style={globalStyles.textBold}>{displayNames.cellType}: </Text><Text>{item.cellType}</Text>
         </View>
 
-        <View>
-          <Text style={globalStyles.textBold}>{displayNames.cellOrganization}: {item.cellOrganization}</Text>
+        <View style={globalStyles.displayRow}>
+          <Text style={globalStyles.textBold}>{displayNames.cellOrganization}: </Text><Text>{item.cellOrganization}</Text>
         </View>
 
-        <View>
-          <Text style={globalStyles.textBold}>{displayNames.reproduction}: {item.reproduction}</Text>
+        <View style={globalStyles.displayRow}>
+          <Text style={globalStyles.textBold}>{displayNames.reproduction}: </Text><Text>{item.reproduction}</Text>
         </View>
 
-        <View>
-          <Text style={globalStyles.textBold}>{displayNames.respiration}: {item.respiration}</Text> 
+        <View style={globalStyles.displayRow}>
+          <Text style={globalStyles.textBold}>{displayNames.respiration}: </Text><Text>{item.respiration}</Text>
         </View>
       </View>
 
